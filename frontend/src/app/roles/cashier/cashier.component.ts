@@ -18,7 +18,7 @@ import { Battery } from '../../shared/models/battery.model';
           <select [(ngModel)]="selectedBatteryId" class="w-full border rounded px-3 py-2">
             <option value="">-- Select Battery --</option>
             <option *ngFor="let battery of batteries" [value]="battery.id">
-              {{ battery.name }} (${{ battery.price }}) - SKU: {{ battery.sku }}
+              {{ battery.name }} (\${{ battery.price }}) - SKU: {{ battery.sku }}
             </option>
           </select>
         </div>
@@ -29,7 +29,7 @@ import { Battery } from '../../shared/models/battery.model';
         </div>
 
         <div class="mb-6 p-4 bg-gray-50 rounded">
-          <p class="text-lg">Total Price: <strong>${{ totalPrice }}</strong></p>
+          <p class="text-lg">Total Price: <strong>\${{ totalPrice }}</strong></p>
         </div>
 
         <button (click)="sellBattery()" class="w-full bg-green-600 text-white py-3 rounded font-bold">
