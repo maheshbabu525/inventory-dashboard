@@ -32,10 +32,10 @@ public class JwtTokenProvider {
     public String getUsernameFromJwt(String token) {
         try {
             SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
-            return Jwts.parserBuilder()
-                    .setSigningKey(key)
+            return Jwts.parser()
+                    .verifyWith(key)
                     .build()
-                    .parseClaimsJws(token)
+                    .parseSignedClaims(token)
                     .getPayload()
                     .getSubject();
         } catch (JwtException e) {
@@ -47,10 +47,10 @@ public class JwtTokenProvider {
     public String getRoleFromJwt(String token) {
         try {
             SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
-            return Jwts.parserBuilder()
-                    .setSigningKey(key)
+            return Jwts.parser()
+                    .verifyWith(key)
                     .build()
-                    .parseClaimsJws(token)
+                    .parseSignedClaims(token)
                     .getPayload()
                     .get("role", String.class);
         } catch (JwtException e) {
@@ -62,10 +62,10 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
-            Jwts.parserBuilder()
-                    .setSigningKey(key)
+            Jwts.parser()
+                    .verifyWith(key)
                     .build()
-                    .parseClaimsJws(token);
+                    .parseSignedClaims(token);
             return true;
         } catch (JwtException e) {
             log.error("JWT validation failed: {}", e.getMessage());
