@@ -47,6 +47,10 @@ import { AuthService } from './shared/services/auth.service';
                class="px-4 py-2 text-sm font-medium text-blue-100 hover:text-white hover:bg-brand-light/60 whitespace-nowrap transition-colors">
               📊 Analytics
             </a>
+            <a routerLink="/architecture" routerLinkActive="bg-brand-light"
+               class="px-4 py-2 text-sm font-medium text-blue-100 hover:text-white hover:bg-brand-light/60 whitespace-nowrap transition-colors">
+              🏗️ Architecture
+            </a>
           </div>
         </nav>
       </header>

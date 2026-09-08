@@ -7,5 +7,6 @@ export const routes: Routes = [
   { path: 'cashier', loadComponent: () => import('./roles/cashier/cashier.component').then(m => m.CashierComponent) },
   { path: 'regional-manager', loadComponent: () => import('./roles/regional-manager/regional-manager.component').then(m => m.RegionalManagerComponent) },
   { path: 'analytics', loadComponent: () => import('./roles/warehouse-analytics/analytics.component').then(m => m.AnalyticsComponent) },
+  { path: 'architecture', loadComponent: () => import('./roles/architecture/architecture.component').then(m => m.ArchitectureComponent) },
   { path: '**', redirectTo: '/login' }
 ];
