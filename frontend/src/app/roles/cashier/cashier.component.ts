@@ -9,13 +9,13 @@ import { Battery } from '../../shared/models/battery.model';
   standalone: true,
   imports: [CommonModule, FormsModule],
   template: `
-    <div class="max-w-4xl mx-auto p-6">
-      <h2 class="text-3xl font-bold mb-6">Cashier - Point of Sale</h2>
-      
-      <div class="bg-white rounded shadow p-6">
+    <div class="max-w-2xl mx-auto p-4 sm:p-6">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-6 text-slate-800">💳 Cashier &mdash; Point of Sale</h2>
+
+      <div class="bg-white rounded-xl shadow p-5 sm:p-6">
         <div class="mb-4">
-          <label class="block text-sm font-medium mb-2">Select Battery</label>
-          <select [(ngModel)]="selectedBatteryId" class="w-full border rounded px-3 py-2">
+          <label class="block text-sm font-medium mb-2 text-slate-700">Select Battery</label>
+          <select [(ngModel)]="selectedBatteryId" class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-light">
             <option value="">-- Select Battery --</option>
             <option *ngFor="let battery of batteries" [value]="battery.id">
               {{ battery.name }} (\${{ battery.price }}) - SKU: {{ battery.sku }}
@@ -24,19 +24,21 @@ import { Battery } from '../../shared/models/battery.model';
         </div>
 
         <div class="mb-4">
-          <label class="block text-sm font-medium mb-2">Quantity to Sell</label>
-          <input type="number" [(ngModel)]="quantity" min="1" max="100" class="w-full border rounded px-3 py-2">
+          <label class="block text-sm font-medium mb-2 text-slate-700">Quantity to Sell</label>
+          <input type="number" [(ngModel)]="quantity" min="1" max="100"
+                 class="w-full border border-slate-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-light">
         </div>
 
-        <div class="mb-6 p-4 bg-gray-50 rounded">
-          <p class="text-lg">Total Price: <strong>\${{ totalPrice }}</strong></p>
+        <div class="mb-6 p-4 bg-slate-50 rounded-lg">
+          <p class="text-lg text-slate-700">Total Price: <strong class="text-brand">\${{ totalPrice }}</strong></p>
         </div>
 
-        <button (click)="sellBattery()" class="w-full bg-green-600 text-white py-3 rounded font-bold">
+        <button (click)="sellBattery()"
+                class="w-full bg-green-600 hover:bg-green-700 transition-colors text-white py-3 rounded-lg font-bold">
           Confirm Sale
         </button>
 
-        <div *ngIf="message" class="mt-4 p-4 bg-blue-100 text-blue-800 rounded">
+        <div *ngIf="message" class="mt-4 p-4 bg-blue-50 text-blue-800 rounded-lg text-sm">
           {{ message }}
         </div>
       </div>

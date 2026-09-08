@@ -32,7 +32,7 @@ public class InventoryController {
     }
 
     @GetMapping("/inventory/all")
-    @PreAuthorize("hasAnyRole('REGIONAL_MANAGER', 'WAREHOUSE_ANALYTICS')")
+    @PreAuthorize("hasAnyRole('CASHIER', 'REGIONAL_MANAGER', 'WAREHOUSE_ANALYTICS')")
     public ResponseEntity<Map<String, Object>> getAllInventory() {
         return ResponseEntity.ok(inventoryService.getAllInventory());
     }

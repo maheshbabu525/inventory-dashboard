@@ -1,9 +1,14 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 import os
 from datetime import datetime
 
 app = Flask(__name__)
+
+# Allow the Angular frontend (a different origin) to call this service directly
+allowed_origins = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:4200').split(',')
+CORS(app, resources={r"/api/*": {"origins": allowed_origins}})
 
 # Database Configuration
 db_url = os.getenv('DATABASE_URL', 'postgresql://postgres:postgres@localhost:5432/battery_inventory')

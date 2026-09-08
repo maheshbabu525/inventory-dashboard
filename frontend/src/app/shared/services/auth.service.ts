@@ -4,12 +4,18 @@ import { environment } from '../../../environments/environment';
 import { LoginRequest, LoginResponse } from '../models/user.model';
 import { Observable, BehaviorSubject } from 'rxjs';
 
+export interface CurrentUser {
+  username: string;
+  role: string;
+  region?: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = `${environment.apiUrl}/api/auth`;
-  private currentUser = new BehaviorSubject<any>(null);
+  private currentUser = new BehaviorSubject<CurrentUser | null>(null);
   public currentUser$ = this.currentUser.asObservable();
 
   constructor(private http: HttpClient) {
@@ -20,10 +26,14 @@ export class AuthService {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, { username, password });
   }
 
-  setToken(token: string, role: string): void {
+  setSession(username: string, token: string, role: string, region?: string): void {
     localStorage.setItem('token', token);
     localStorage.setItem('role', role);
-    this.currentUser.next({ role, token });
+    localStorage.setItem('username', username);
+    if (region) {
+      localStorage.setItem('region', region);
+    }
+    this.currentUser.next({ username, role, region });
   }
 
   getToken(): string | null {
@@ -34,6 +44,10 @@ export class AuthService {
     return localStorage.getItem('role');
   }
 
+  getUsername(): string | null {
+    return localStorage.getItem('username');
+  }
+
   isAuthenticated(): boolean {
     return !!this.getToken();
   }
@@ -41,14 +55,18 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('role');
+    localStorage.removeItem('username');
+    localStorage.removeItem('region');
     this.currentUser.next(null);
   }
 
   private loadUser(): void {
     const token = this.getToken();
     const role = this.getRole();
-    if (token && role) {
-      this.currentUser.next({ token, role });
+    const username = this.getUsername();
+    const region = localStorage.getItem('region') || undefined;
+    if (token && role && username) {
+      this.currentUser.next({ username, role, region });
     }
   }
 }

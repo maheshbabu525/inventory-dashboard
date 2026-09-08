@@ -10,6 +10,7 @@ import { InventoryItem } from '../models/inventory.model';
 })
 export class InventoryService {
   private apiUrl = `${environment.apiUrl}/api`;
+  private pythonUrl = `${environment.pythonApiUrl}/api/python`;
 
   constructor(private http: HttpClient) {}
 
@@ -32,5 +33,12 @@ export class InventoryService {
 
   getAnalytics(): Observable<any> {
     return this.http.get(`${this.apiUrl}/inventory/analytics`);
+  }
+
+  // Calls the Python microservice directly for a live low-stock check on one region.
+  // This is real business logic running in Python, not just a health check -
+  // it demonstrates the Python service actually being used by the app.
+  getStockAlerts(region: string, threshold: number = 20): Observable<any> {
+    return this.http.post<any>(`${this.pythonUrl}/stock-alert`, { region, threshold });
   }
 }
