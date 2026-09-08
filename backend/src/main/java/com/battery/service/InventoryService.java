@@ -45,7 +45,17 @@ public class InventoryService {
     }
 
     @Transactional
-    public SaleResponse sellBattery(Long batteryId, Integer quantity, String region, Long userId) {
+    public SaleResponse sellBattery(Long batteryId, Integer quantity, String username) {
+        // Resolve the real authenticated user so the sale is attributed to their
+        // actual account and deducted from their actual assigned region
+        // (never hardcode userId/region - that would corrupt every other region's stock).
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        String region = user.getRegion();
+        if (region == null) {
+            throw new RuntimeException("User has no assigned region");
+        }
+
         Battery battery = batteryRepository.findById(batteryId)
                 .orElseThrow(() -> new RuntimeException("Battery not found"));
 
@@ -61,7 +71,6 @@ public class InventoryService {
         inventoryRepository.save(inventory);
 
         // Record transaction
-        User user = userRepository.findById(userId).orElse(null);
         Transaction transaction = new Transaction();
         transaction.setUser(user);
         transaction.setBattery(battery);

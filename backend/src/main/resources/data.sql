@@ -1,9 +1,10 @@
--- Insert test users (passwords would be hashed in production)
+-- Insert test users (bcrypt hashes, one per real password)
+-- cashier1/cashier2 -> cashier123, regional_manager1 -> rm123, warehouse1 -> wh123
 INSERT INTO users (username, password_hash, role, region) VALUES
-('cashier1', '$2a\$10\$V0fVz3oLGaIdPq9XdqQT4eWE7E4VH0pYCy00B0T/m1CRxm9d4.Qly', 'CASHIER', 'East'),
-('cashier2', '$2a\$10\$V0fVz3oLGaIdPq9XdqQT4eWE7E4VH0pYCy00B0T/m1CRxm9d4.Qly', 'CASHIER', 'West'),
-('regional_manager1', '$2a\$10\$V0fVz3oLGaIdPq9XdqQT4eWE7E4VH0pYCy00B0T/m1CRxm9d4.Qly', 'REGIONAL_MANAGER', NULL),
-('warehouse1', '$2a\$10\$V0fVz3oLGaIdPq9XdqQT4eWE7E4VH0pYCy00B0T/m1CRxm9d4.Qly', 'WAREHOUSE_ANALYTICS', NULL)
+('cashier1', '$2b$10$Gk8IRXe9M8CPeq4TyYoTKePU5bYn7CMbk0VDaDFDrpzTgh3Hh8g52', 'CASHIER', 'East'),
+('cashier2', '$2b$10$Gk8IRXe9M8CPeq4TyYoTKePU5bYn7CMbk0VDaDFDrpzTgh3Hh8g52', 'CASHIER', 'West'),
+('regional_manager1', '$2b$10$705/.DW.Xtksb5k.ZiWQ7uproCpvJme.jpavk9jsofrCKjo3sN1ly', 'REGIONAL_MANAGER', NULL),
+('warehouse1', '$2b$10$aEUOSgzkmmGzni9GPorOm.Mb.Z/jtVnYDhWBtnLXw7dIwhtK4q5oK', 'WAREHOUSE_ANALYTICS', NULL)
 ON CONFLICT DO NOTHING;
 
 -- Insert batteries

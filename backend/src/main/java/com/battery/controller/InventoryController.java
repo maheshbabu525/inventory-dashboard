@@ -40,10 +40,8 @@ public class InventoryController {
     @PostMapping("/inventory/sale")
     @PreAuthorize("hasRole('CASHIER')")
     public ResponseEntity<SaleResponse> sellBattery(@RequestBody SaleRequest request, Authentication auth) {
-        // Extract user ID from auth (simplified for demo)
-        Long userId = 1L;
-        String region = "East";
-        return ResponseEntity.ok(inventoryService.sellBattery(request.getBatteryId(), request.getQuantity(), region, userId));
+        // auth.getName() is the username set by JwtAuthenticationFilter from the validated token
+        return ResponseEntity.ok(inventoryService.sellBattery(request.getBatteryId(), request.getQuantity(), auth.getName()));
     }
 
     @GetMapping("/inventory/analytics")
