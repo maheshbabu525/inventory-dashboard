@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-backend.railway.app'  // Update after backend deployed
+  apiUrl: 'https://lovely-possibility-production-5ecf.up.railway.app'
 };
